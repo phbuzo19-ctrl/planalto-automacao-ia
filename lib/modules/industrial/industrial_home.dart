@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class IndustrialHome extends StatelessWidget {
-  const IndustrialHome({super.key}); // 👈 ESSENCIAL
+  const IndustrialHome({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -9,30 +9,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-    - uses: subosito/flutter-action@v2
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.22.2'
 
-    # Criar projeto Flutter oficial (android/ ios/ etc)
     - name: Create Flutter project structure
       run: |
-        flutter create temp_app
-        rsync -a temp_app/ ./
-        rm -rf temp_app
-
-    # Restaurar seu código
-    - name: Restore app files
-      run: |
-        rm -rf lib
-        cp -r ./lib ./lib
-        flutter pub get
+        flutter create .
+    
+    - name: Get dependencies
+      run: flutter pub get
 
     - name: Build APK
       run: flutter build apk --release
 
-    - uses: actions/upload-artifact@v4
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
       with:
         name: app-release
         path: build/app/outputs/flutter-apk/app-release.apk

@@ -1,13 +1,13 @@
-import 'calculadora_eletrica.dart';body: Center(
-  child: ElevatedButton(
-    child: const Text('Calculadora Elétrica'),
-    onPressed: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const CalculadoraEletrica(),
-        ),
-      );
-    },
-  ),
-),
+import 'package:flutter/material.dart';
+
+class ResidencialHome extends StatelessWidget {
+  const ResidencialHome({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Residencial')),
+      body: const Center(child: Text('Planalto Automação IA')),
+    );
+  }
+}

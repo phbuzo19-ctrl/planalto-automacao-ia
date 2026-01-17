@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class IndustrialHome extends StatelessWidget {
-  const IndustrialHome({super.key});
+  const IndustrialHome({super.key}); // 👈 ESSENCIAL
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +10,10 @@ class IndustrialHome extends StatelessWidget {
         title: const Text('Automação Industrial'),
       ),
       body: const Center(
-        child: Text('Módulo Industrial'),
+        child: Text(
+          'Módulo Industrial',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
     );
   }

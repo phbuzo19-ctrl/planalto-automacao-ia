@@ -15,8 +15,22 @@ jobs:
       with:
         flutter-version: '3.22.2'
 
-    - run: flutter pub get
-    - run: flutter build apk --release
+    # Criar projeto Flutter oficial (android/ ios/ etc)
+    - name: Create Flutter project structure
+      run: |
+        flutter create temp_app
+        rsync -a temp_app/ ./
+        rm -rf temp_app
+
+    # Restaurar seu código
+    - name: Restore app files
+      run: |
+        rm -rf lib
+        cp -r ./lib ./lib
+        flutter pub get
+
+    - name: Build APK
+      run: flutter build apk --release
 
     - uses: actions/upload-artifact@v4
       with:

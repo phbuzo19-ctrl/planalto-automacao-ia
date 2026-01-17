@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:planalto_automacao_ia/core/routes.dart';
+import 'core/routes.dart';
 
 void main() {
   runApp(const PlanaltoAutomacaoIA());

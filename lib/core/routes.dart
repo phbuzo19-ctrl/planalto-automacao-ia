@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:planalto_automacao_ia/modules/residencial/residencial_home.dart';
+
+import '../modules/residencial/residencial_home.dart';
+import '../modules/industrial/industrial_home.dart';
+import '../modules/ia/ia_chat_page.dart';
 
 class AppRoutes {
-  static final Map<String, WidgetBuilder> routes = {
+  static Map<String, WidgetBuilder> routes = {
     '/': (context) => const ResidencialHome(),
+    '/industrial': (context) => const IndustrialHome(),
+    '/ia': (context) => const IaChatPage(),
   };
 }

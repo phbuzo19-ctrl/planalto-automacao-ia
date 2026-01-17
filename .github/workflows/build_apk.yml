@@ -2,42 +2,44 @@ name: Build APK Release
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.2'
-          channel: 'stable'
-          cache: true
+          channel: stable
 
-      - name: Flutter Doctor
-        run: flutter doctor -v
+      - name: Criar projeto Flutter base
+        run: |
+          flutter create -t app --org br.com.planalto temp_app
 
-      - name: Flutter Pub Get
-        run: flutter pub get
+      - name: Substituir código Dart
+        run: |
+          rm -rf temp_app/lib
+          cp -r lib temp_app/lib
+          cp pubspec.yaml temp_app/pubspec.yaml
+
+      - name: Instalar dependências
+        run: |
+          cd temp_app
+          flutter pub get
 
       - name: Build APK Release
-        run: flutter build apk --release
+        run: |
+          cd temp_app
+          flutter build apk --release
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: planalto-automacao-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: temp_app/build/app/outputs/flutter-apk/app-release.apk

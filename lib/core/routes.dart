@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
-import 'core/routes.dart';
+import 'package:planalto_automacao_ia/modules/industrial/industrial_home.dart';
+import 'package:planalto_automacao_ia/modules/residencial/residencial_home.dart';
+import 'package:planalto_automacao_ia/modules/orcamentos/orcamento_page.dart';
 
-void main() {
-  runApp(const PlanaltoAutomacaoIA());
-}
-
-class PlanaltoAutomacaoIA extends StatelessWidget {
-  const PlanaltoAutomacaoIA({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Planalto Automação IA',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blueGrey),
-      routes: AppRoutes.routes,
-      initialRoute: '/',
-    );
-  }
+class AppRoutes {
+  static final Map<String, WidgetBuilder> routes = {
+    '/': (context) => const IndustrialHome(),
+    '/residencial': (context) => const ResidencialHome(),
+    '/orcamento': (context) => const OrcamentoPage(),
+  };
 }

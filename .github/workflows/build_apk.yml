@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -13,20 +14,30 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Instalar Flutter
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.2'
           channel: 'stable'
+          cache: true
 
-      - name: Baixar dependências
+      - name: Flutter Doctor
+        run: flutter doctor -v
+
+      - name: Flutter Pub Get
         run: flutter pub get
 
-      - name: Compilar APK Release
+      - name: Build APK Release
         run: flutter build apk --release
 
-      - name: Publicar APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: planalto-automacao-release
+          name: planalto-automacao-apk
           path: build/app/outputs/flutter-apk/app-release.apk

@@ -19,22 +19,21 @@ jobs:
 
       - name: Create full Flutter project
         run: |
-          flutter create app
-          rm -rf app/lib app/assets
-          cp -r lib app/
-          if [ -d assets ]; then cp -r assets app/; fi
-          cp pubspec.yaml app/
+          flutter create temp_app
+          rsync -a temp_app/ ./
+          rm -rf temp_app
 
-      - name: Move generated project to root
+      - name: Restore user code
         run: |
-          shopt -s dotglob
-          mv app/* .
-          rm -rf app
+          rm -rf lib
+          cp -r ./lib ./lib || true
+          if [ -d assets ]; then cp -r assets assets; fi
+          cp pubspec.yaml pubspec.yaml
 
-      - name: Commit generated Flutter platforms
+      - name: Commit Flutter project structure
         run: |
           git config user.name "github-actions"
-          git config user.email "actions@github.com"
+          git config user.email "github-actions@github.com"
           git add .
           git commit -m "Bootstrap Flutter project with android/ (one time)" || echo "Nothing to commit"
           git push

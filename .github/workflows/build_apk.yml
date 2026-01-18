@@ -23,7 +23,7 @@ jobs:
         run: flutter config --enable-android
 
       - name: Create clean Flutter project
-        run: flutter create -t app temp_app
+        run: flutter create -t app --org br.com.planalto temp_app
 
       - name: Copy source code
         run: |
@@ -32,7 +32,7 @@ jobs:
           cp pubspec.yaml temp_app/pubspec.yaml
           if [ -d assets ]; then cp -r assets temp_app/assets; fi
 
-      - name: Resolve dependencies
+      - name: Get dependencies
         working-directory: temp_app
         run: flutter pub get
 

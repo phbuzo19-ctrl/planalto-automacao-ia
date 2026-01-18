@@ -2,7 +2,8 @@ name: Build APK Release
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   build:
@@ -19,8 +20,7 @@ jobs:
           channel: stable
 
       - name: Criar projeto Flutter base
-        run: |
-          flutter create -t app --org br.com.planalto temp_app
+        run: flutter create -t app --org br.com.planalto temp_app
 
       - name: Substituir código Dart
         run: |

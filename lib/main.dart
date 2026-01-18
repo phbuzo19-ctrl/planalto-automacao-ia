@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'core/routes.dart';
 
 void main() {
-  runApp(const PlanaltoAutomacaoIA());
+  runApp(const PlanaltoApp());
 }
 
-class PlanaltoAutomacaoIA extends StatelessWidget {
-  const PlanaltoAutomacaoIA({super.key});
+class PlanaltoApp extends StatelessWidget {
+  const PlanaltoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Planalto Automação IA',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blueGrey),
-      routes: AppRoutes.routes,
+      title: 'Planalto Automação',
       initialRoute: '/',
+      routes: appRoutes,
     );
   }
 }

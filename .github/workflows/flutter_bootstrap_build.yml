@@ -1,0 +1,51 @@
+name: Flutter Bootstrap + Build APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.22.2"
+          channel: stable
+
+      - name: Criar projeto Flutter completo (se necessário)
+        run: |
+          if [ ! -d "android" ]; then
+            echo ">> Criando projeto Flutter completo"
+            flutter create .
+          else
+            echo ">> Projeto Flutter já existe"
+          fi
+
+      - name: Restaurar código do app
+        run: |
+          echo ">> Código Dart já está versionado em lib/"
+          flutter pub get
+
+      - name: Commit automático do projeto gerado
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add android ios linux macos windows pubspec.lock
+          git commit -m "Bootstrap Flutter project (android gerado automaticamente)" || echo "Nada para commitar"
+          git push
+
+      - name: Build APK release
+        run: flutter build apk --release
+
+      - name: Publicar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: planalto-automacao-apk
+          path: build/app/outputs/flutter-apk/app-release.apk

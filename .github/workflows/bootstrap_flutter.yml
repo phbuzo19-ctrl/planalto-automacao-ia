@@ -1,0 +1,30 @@
+name: Bootstrap Flutter Project (ONE TIME)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.22.2"
+          channel: stable
+
+      - name: Create full Flutter project
+        run: |
+          flutter create .
+
+      - name: Commit generated project
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add android ios linux macos windows pubspec.yaml
+          git commit -m "Bootstrap Flutter project (android folder generated)"
+          git push

@@ -19,16 +19,17 @@ jobs:
           flutter-version: '3.22.2'
           channel: stable
 
-      - name: Criar projeto Flutter base
+      - name: Criar projeto Flutter limpo
         run: flutter create -t app --org br.com.planalto temp_app
 
-      - name: Substituir código Dart
+      - name: Copiar código do app
         run: |
           rm -rf temp_app/lib
           cp -r lib temp_app/lib
           cp pubspec.yaml temp_app/pubspec.yaml
+          if [ -d assets ]; then cp -r assets temp_app/assets; fi
 
-      - name: Instalar dependências
+      - name: Resolver dependências
         run: |
           cd temp_app
           flutter pub get

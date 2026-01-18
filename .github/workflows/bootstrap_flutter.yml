@@ -1,4 +1,4 @@
-name: Bootstrap Flutter Project (ONE TIME)
+name: Bootstrap Flutter Project
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Flutter
@@ -17,32 +17,31 @@ jobs:
           flutter-version: "3.22.2"
           channel: stable
 
-      - name: Create Flutter project
+      - name: Criar projeto Flutter completo
         run: |
-          flutter create flutter_app
+          flutter create app --project-name planalto_automacao_ia
 
-      - name: Inject existing code
+      - name: Injetar código do repositório
         run: |
-          rm -rf flutter_app/lib
-          cp -r lib flutter_app/lib
+          rm -rf app/lib
+          cp -r lib app/
 
           if [ -d assets ]; then
-            cp -r assets flutter_app/assets
+            rm -rf app/assets
+            cp -r assets app/
           fi
 
-          cp pubspec.yaml flutter_app/pubspec.yaml
+          cp pubspec.yaml app/
 
-      - name: Replace repository with Flutter project
+      - name: Commit do projeto completo
         run: |
-          shopt -s dotglob
-          rm -rf *
-          mv flutter_app/* .
-          rm -rf flutter_app
+          rm -rf lib assets pubspec.yaml
+          mv app/* .
+          rm -rf app
 
-      - name: Commit full Flutter structure
-        run: |
           git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.email "actions@github.com"
+
           git add .
-          git commit -m "Create full Flutter project with android/"
+          git commit -m "bootstrap: flutter project completo com android/"
           git push

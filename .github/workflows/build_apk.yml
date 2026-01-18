@@ -1,9 +1,8 @@
-name: Build APK - Planalto Automação
+name: Build APK Flutter (Auto)
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -11,26 +10,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout código
         uses: actions/checkout@v4
 
-      - name: Setup Flutter
+      - name: Instalar Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.22.2"
           channel: stable
 
-      - name: Flutter doctor
-        run: flutter doctor -v
+      - name: Criar projeto Flutter limpo
+        run: flutter create --platforms=android app
 
-      - name: Get dependencies
+      - name: Injetar código do repositório
+        run: |
+          rm -rf app/lib
+          rm -rf app/assets
+          cp -r lib app/
+          cp -r assets app/
+          cp pubspec.yaml app/
+
+      - name: Resolver dependências
+        working-directory: app
         run: flutter pub get
 
-      - name: Build release APK
+      - name: Build APK release
+        working-directory: app
         run: flutter build apk --release
 
-      - name: Upload APK
+      - name: Publicar APK
         uses: actions/upload-artifact@v4
         with:
           name: planalto-automacao-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: app/build/app/outputs/flutter-apk/app-release.apk

@@ -23,12 +23,22 @@ jobs:
         run: flutter create --platforms=android app
 
       - name: Injetar código do repositório
-        run: |
-          rm -rf app/lib
-          rm -rf app/assets
-          cp -r lib app/
-          cp -r assets app/
-          cp pubspec.yaml app/
+        - name: Injetar código do repositório
+  run: |
+    echo "Injetando lib/"
+    rm -rf app/lib
+    cp -r lib app/
+
+    if [ -d "assets" ]; then
+      echo "Injetando assets/"
+      rm -rf app/assets
+      cp -r assets app/
+    else
+      echo "Nenhuma pasta assets encontrada, ignorando"
+    fi
+
+    echo "Copiando pubspec.yaml"
+    cp pubspec.yaml app/
 
       - name: Resolver dependências
         working-directory: app

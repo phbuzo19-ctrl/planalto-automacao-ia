@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Setup Flutter
@@ -17,23 +17,32 @@ jobs:
           flutter-version: "3.22.2"
           channel: stable
 
-      - name: Create full Flutter project
+      - name: Create Flutter project
         run: |
-          flutter create temp_app
-          rsync -a temp_app/ ./
-          rm -rf temp_app
+          flutter create flutter_app
 
-      - name: Restore user code
+      - name: Inject existing code
         run: |
-          rm -rf lib
-          cp -r ./lib ./lib || true
-          if [ -d assets ]; then cp -r assets assets; fi
-          cp pubspec.yaml pubspec.yaml
+          rm -rf flutter_app/lib
+          cp -r lib flutter_app/lib
 
-      - name: Commit Flutter project structure
+          if [ -d assets ]; then
+            cp -r assets flutter_app/assets
+          fi
+
+          cp pubspec.yaml flutter_app/pubspec.yaml
+
+      - name: Replace repository with Flutter project
+        run: |
+          shopt -s dotglob
+          rm -rf *
+          mv flutter_app/* .
+          rm -rf flutter_app
+
+      - name: Commit full Flutter structure
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add .
-          git commit -m "Bootstrap Flutter project with android/ (one time)" || echo "Nothing to commit"
+          git commit -m "Create full Flutter project with android/"
           git push

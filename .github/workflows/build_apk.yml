@@ -21,12 +21,12 @@ jobs:
 
       - name: Create temporary Flutter project
         run: |
+          rm -rf temp_app
           flutter create temp_app
+          cp pubspec.yaml temp_app/pubspec.yaml
           rm -rf temp_app/lib
-          rm -rf temp_app/assets
-          cp -r lib temp_app/
-          if [ -d assets ]; then cp -r assets temp_app/; fi
-          cp pubspec.yaml temp_app/
+          cp -r lib temp_app/lib
+          if [ -d assets ]; then cp -r assets temp_app/assets; fi
 
       - name: Get dependencies
         working-directory: temp_app

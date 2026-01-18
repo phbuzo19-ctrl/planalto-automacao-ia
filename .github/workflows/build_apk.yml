@@ -1,4 +1,4 @@
-name: Build APK Release
+name: Build APK Release (verbose)
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Flutter
@@ -22,22 +22,24 @@ jobs:
       - name: Enable Android
         run: flutter config --enable-android
 
-      - name: Criar projeto Flutter limpo
+      - name: Create clean Flutter project
         run: flutter create -t app --org br.com.planalto temp_app
 
-      - name: Substituir código do app (SEM pubspec.yaml)
+      - name: Copy app source code
         run: |
           rm -rf temp_app/lib
           cp -r lib temp_app/lib
           if [ -d assets ]; then cp -r assets temp_app/assets; fi
 
-      - name: Resolver dependências
+      - name: Resolve dependencies
         working-directory: temp_app
         run: flutter pub get
 
-      - name: Build APK Release
+      - name: Build APK Release (verbose)
         working-directory: temp_app
-        run: flutter build apk --release
+        run: |
+          flutter clean
+          flutter build apk --release --verbose
 
       - name: Upload APK
         uses: actions/upload-artifact@v4

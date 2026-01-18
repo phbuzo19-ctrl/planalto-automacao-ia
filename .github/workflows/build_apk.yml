@@ -25,11 +25,10 @@ jobs:
       - name: Criar projeto Flutter limpo
         run: flutter create -t app --org br.com.planalto temp_app
 
-      - name: Copiar código do app
+      - name: Substituir código do app (SEM pubspec.yaml)
         run: |
           rm -rf temp_app/lib
           cp -r lib temp_app/lib
-          cp pubspec.yaml temp_app/pubspec.yaml
           if [ -d assets ]; then cp -r assets temp_app/assets; fi
 
       - name: Resolver dependências

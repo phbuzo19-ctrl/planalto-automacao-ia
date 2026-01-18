@@ -1,5 +1,3 @@
-mkdir -p lib
-cat << 'EOF' > lib/main.dart
 import 'package:flutter/material.dart';
 import 'core/routes.dart';
 
@@ -20,4 +18,3 @@ class PlanaltoApp extends StatelessWidget {
     );
   }
 }
-EOF

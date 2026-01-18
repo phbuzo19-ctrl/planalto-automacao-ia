@@ -1,3 +1,5 @@
+mkdir -p lib
+cat << 'EOF' > lib/main.dart
 import 'package:flutter/material.dart';
 import 'core/routes.dart';
 
@@ -11,10 +13,11 @@ class PlanaltoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'Planalto Automação',
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: appRoutes,
     );
   }
 }
+EOF

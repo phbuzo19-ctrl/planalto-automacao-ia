@@ -6,12 +6,9 @@ class ResidencialHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Automação Residencial')),
+      appBar: AppBar(title: const Text('Residencial')),
       body: const Center(
-        child: Text(
-          'Módulo Residencial',
-          style: TextStyle(fontSize: 20),
-        ),
+        child: Text('Módulo Residencial', style: TextStyle(fontSize: 22)),
       ),
     );
   }

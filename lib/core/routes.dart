@@ -3,13 +3,13 @@ import '../modules/industrial/industrial_home.dart';
 import '../modules/residencial/residencial_home.dart';
 
 final Map<String, WidgetBuilder> appRoutes = {
-  '/': (context) => const HomeSelector(),
+  '/': (context) => const HomePage(),
   '/industrial': (context) => const IndustrialHome(),
   '/residencial': (context) => const ResidencialHome(),
 };
 
-class HomeSelector extends StatelessWidget {
-  const HomeSelector({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +21,11 @@ class HomeSelector extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () => Navigator.pushNamed(context, '/industrial'),
-              child: const Text('Industrial'),
+              child: const Text('Automação Industrial'),
             ),
-            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => Navigator.pushNamed(context, '/residencial'),
-              child: const Text('Residencial'),
+              child: const Text('Automação Residencial'),
             ),
           ],
         ),
